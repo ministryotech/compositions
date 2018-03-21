@@ -1,0 +1,21 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netstandard1.6</TargetFramework>
+    <Authors>Keith Jackson</Authors>
+    <Company>Minotech Ltd. (The Ministry of Technology) / Esoterix Systems Ltd.</Company>
+    <Description>Library of Functional Composition Extension Methods</Description>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <Copyright>2018 Minotech Ltd.</Copyright>
+    <RepositoryUrl>https://github.com/ministryotech/compositions.git</RepositoryUrl>
+    <RepositoryType>git</RepositoryType>
+    <AssemblyVersion>1.0.0.0</AssemblyVersion>
+    <FileVersion>1.0.0.0</FileVersion>
+    <Version>1.0.0</Version>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Ministry.Reflection" Version="4.0.0" />
+  </ItemGroup>
+
+</Project>
