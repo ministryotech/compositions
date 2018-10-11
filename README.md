@@ -91,7 +91,7 @@ Newer content prefers Github. Bitbucket is no longer actively used.
 ### Where can I get it?
 You can download the package for this project from any of the following package managers...
 
-- **NUGET** - [https://www.nuget.org/packages/Ministry.FluentGuard](https://www.nuget.org/packages/Ministry.FluentGuard)
+- **NUGET** - [https://www.nuget.org/packages/Ministry.Compositions](https://www.nuget.org/packages/Ministry.Compositions)
 
 ### Contribution guidelines
 If you would like to contribute to the project, please contact me.
