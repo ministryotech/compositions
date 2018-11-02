@@ -1,4 +1,7 @@
-﻿using Ministry.Reflection;
+﻿#if NETSTANDARD1_6
+using Ministry.Reflection;
+#endif
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -110,6 +113,8 @@ namespace Ministry.Compositions
             return @this;
         }
 
+        #if NETSTANDARD1_6
+
         /// <summary>
         /// Adds the given new collection, evaluating each item against a given predicate, to the specified collection property and returns the parent object.
         /// </summary>
@@ -183,6 +188,8 @@ namespace Ministry.Compositions
             Expression<Func<TParentObject, T>> propertyExpression, Func<T, bool> predicate, params T[] newObjects)
             => (await @this).AddItemsToIf(propertyExpression, predicate, newObjects);
 
+        #endif
+
         /// <summary>
         /// Adds the given new object to a collection and returns the object that was added.
         /// </summary>
@@ -254,6 +261,8 @@ namespace Ministry.Compositions
         public static T Compose<T>(this T @this, Func<T, T> method)
             => method(@this);
 
+        #if NETSTANDARD
+
         /// <summary>
         /// Enables functional composition of a method, enabling chaining.
         /// </summary>
@@ -287,6 +296,8 @@ namespace Ministry.Compositions
         public static async Task<T> Compose<T>(this Task<T> @this, Func<T, T> method)
             => method(await @this);
 
+        #endif
+
         /// <summary>
         /// Enables functional composition of a method, enabling chaining.
         /// </summary>
@@ -299,6 +310,8 @@ namespace Ministry.Compositions
         [DebuggerStepThrough]
         public static T Compose<T, TParam1>(this T @this, Func<T, TParam1, T> method, TParam1 param1)
             => method(@this, param1);
+
+        #if NETSTANDARD
 
         /// <summary>
         /// Enables functional composition of a method, enabling chaining.
@@ -339,6 +352,8 @@ namespace Ministry.Compositions
         public static async Task<T> Compose<T, TParam1>(this Task<T> @this, Func<T, TParam1, T> method, TParam1 param1)
             => method(await @this, param1);
 
+        #endif
+
         /// <summary>
         /// Enables functional composition of a method, enabling chaining.
         /// </summary>
@@ -353,6 +368,8 @@ namespace Ministry.Compositions
         [DebuggerStepThrough]
         public static T Compose<T, TParam1, TParam2>(this T @this, Func<T, TParam1, TParam2, T> method, TParam1 param1, TParam2 param2)
             => method(@this, param1, param2);
+
+        #if NETSTANDARD
 
         /// <summary>
         /// Enables functional composition of a method, enabling chaining.
@@ -399,9 +416,13 @@ namespace Ministry.Compositions
         public static async Task<T> Compose<T, TParam1, TParam2>(this Task<T> @this, Func<T, TParam1, TParam2, T> method, TParam1 param1, TParam2 param2)
             => method(await @this, param1, param2);
 
+        #endif
+
         #endregion
 
         #region | SetAndReturnProperty |
+
+        #if NETSTANDARD
 
         /// <summary>
         /// Sets the specified navigation property value on an object to enable chaining and to ensure that the object tree is built in the right order.
@@ -446,9 +467,13 @@ namespace Ministry.Compositions
             Expression<Func<TParentObject, T>> propertyExpression, T newValue)
             => SetAndReturnProperty(await @this, propertyExpression, newValue);
 
+        #endif
+
         #endregion
 
         #region | SetProperty |
+
+        #if NETSTANDARD
 
         /// <summary>
         /// Sets the specified navigation property value on an object to enable chaining and to ensure that the object tree is built in the right order.
@@ -492,6 +517,8 @@ namespace Ministry.Compositions
         public static async Task<TParentObject> SetPropertyAsync<T, TParentObject>(this Task<TParentObject> @this,
             Expression<Func<TParentObject, T>> propertyExpression, T newValue)
             => SetProperty(await @this, propertyExpression, newValue);
+
+        #endif
 
         #endregion
     }

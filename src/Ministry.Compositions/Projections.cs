@@ -1,4 +1,7 @@
-﻿using Ministry.Reflection;
+﻿#if NETSTANDARD1_6
+using Ministry.Reflection;
+#endif
+
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
@@ -19,6 +22,8 @@ namespace Ministry.Compositions
     public static class Projections
     {
         #region | Project |
+
+#if NETSTANDARD
 
         /// <summary>
         /// Projects all property values from the input object on the passed in target object, if they are present in both.
@@ -66,6 +71,8 @@ namespace Ministry.Compositions
 
             return targetObject;
         }
+
+#endif
 
         /// <summary>
         /// Uses the provided function to project one type into another type.
