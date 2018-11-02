@@ -1,7 +1,7 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard1.6;net40</TargetFrameworks>
+    <TargetFrameworks>netstandard1.6;net45</TargetFrameworks>
     <Authors>Keith Jackson</Authors>
     <Company>Minotech Ltd. (The Ministry of Technology) / Esoterix Systems Ltd.</Company>
     <Description>Library of Functional Composition Extension Methods</Description>
@@ -21,8 +21,8 @@
     <PackageReference Include="Ministry.FluentGuard" Version="1.0.2" />
   </ItemGroup>
 
-  <ItemGroup Condition="'$(TargetFramework)' != 'net40'">
-    <PackageReference Include="Ministry.Reflection" Version="4.0.0" />
+  <ItemGroup>
+    <PackageReference Include="Ministry.Reflection" Version="4.0.1" />
   </ItemGroup>
 
 </Project>
