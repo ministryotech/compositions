@@ -6,7 +6,7 @@
   </PropertyGroup>
 
   <PropertyGroup>
-    <TargetFramework>netcoreapp1.1</TargetFramework>
+    <TargetFramework>net5.0</TargetFramework>
     <Authors>Keith Jackson</Authors>
     <Company>Minotech Ltd. (The Ministry of Technology) / Esoterix Systems Ltd.</Company>
     <Description>Test library</Description>

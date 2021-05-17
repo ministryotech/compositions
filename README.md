@@ -52,7 +52,10 @@ These are void return methods.
 Adds the provided collection to the existing collection.
 
 ### ICollection.ForEach()
-A fluent version of the for eanch loop.
+A fluent version of the for each loop. Do NOT use with async calls.
+
+### ICollection.ForEachAsync()
+A fluent version of the for each loop for async calls.
 
 ## Projections
 

@@ -3,23 +3,31 @@
   <PropertyGroup>
     <TargetFrameworks>netstandard1.6;net45</TargetFrameworks>
     <Authors>Keith Jackson</Authors>
-    <Company>Minotech Ltd. (The Ministry of Technology) / Esoterix Systems Ltd.</Company>
+    <Company>Minotech Ltd. (The Ministry of Technology)</Company>
     <Description>Library of Functional Composition Extension Methods</Description>
     <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
     <Copyright>2018 Minotech Ltd.</Copyright>
     <RepositoryUrl>https://github.com/ministryotech/compositions.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <AssemblyVersion>1.2.1.0</AssemblyVersion>
-    <FileVersion>1.2.1.0</FileVersion>
-    <Version>1.2.1</Version>
-    <PackageLicenseUrl>http://www.opensource.org/licenses/MIT</PackageLicenseUrl>
+    <AssemblyVersion>1.3.0.0</AssemblyVersion>
+    <FileVersion>1.3.0.0</FileVersion>
+    <Version>1.3.0</Version>
+    <PackageLicenseUrl></PackageLicenseUrl>
     <PackageProjectUrl>http://www.ministryotech.co.uk/developers/open-source-projects/</PackageProjectUrl>
     <Configurations>Debug;Release</Configurations>
+    <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
   
   <ItemGroup>
     <PackageReference Include="Ministry.FluentGuard" Version="1.0.2" />
     <PackageReference Include="Ministry.Reflection" Version="4.0.1" />
+  </ItemGroup>
+  
+  <ItemGroup>
+    <None Include="..\..\LICENSE">
+      <Pack>True</Pack>
+      <PackagePath></PackagePath>
+    </None>
   </ItemGroup>
 
 </Project>
