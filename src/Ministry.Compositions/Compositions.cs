@@ -20,6 +20,7 @@ namespace Ministry.Compositions
     /// In contrast with the <seealso cref="Projections"/> class, the functions are not guaranteed pure or immutable and will often mutate the state of the first parameter.
     /// </remarks>
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
+    [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "Shared Library")]
     public static class Compositions
     {
         #region | Collection Manipulation |

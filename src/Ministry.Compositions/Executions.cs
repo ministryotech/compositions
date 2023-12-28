@@ -12,11 +12,12 @@ namespace Ministry.Compositions
     /// When using Compositional methods in a functional style in .net we can use Select statements to build queries.
     /// This allows for clear, tidy functional methods but it's also quite obtuse when you need to ensure that you execute a function as the Select
     /// statement only creates a query, it's not actually executed until it becomes something more concrete, such as an Array or a List.
-    /// The Execution extensions here allow you to write these same queries in a more exlicit way, using Execute() instead of Select()
+    /// The Execution extensions here allow you to write these same queries in a more explicit way, using Execute() instead of Select()
     /// the result is automatically executed and converted into an explicit type.
     /// </remarks>
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
+    [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "Shared Library")]
     public static class Executions
     {
         /// <summary>

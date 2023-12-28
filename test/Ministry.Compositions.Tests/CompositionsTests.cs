@@ -1,4 +1,6 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Ministry.Compositions.Tests.TestSupport;
 using NSubstitute;
@@ -6,7 +8,6 @@ using Xunit;
 
 namespace Ministry.Compositions.Tests
 {
-    [Trait("Category", "Extensions")]
     public class CompositionsTests
     {
         #region | Collections |
@@ -43,6 +44,66 @@ namespace Ministry.Compositions.Tests
 
             Assert.Equal(testCollection, result);
             Assert.Equal(2, result.Count);
+        }
+
+        [Fact]
+        public void CanMutateACollectionFluently()
+        {
+            var testCollection = new TestObject[]
+            {
+                new (1, "First"),
+                new (3, "Second"),
+                new (5, "Third")
+            };
+
+            testCollection.ForEach(to => to.Id++);
+
+            Assert.Equal(3, testCollection.Length);
+            Assert.Equal(2, testCollection.First(to => to.Name == "First").Id);
+            Assert.Equal(4, testCollection.First(to => to.Name == "Second").Id);
+            Assert.Equal(6, testCollection.First(to => to.Name == "Third").Id);
+        }
+
+        [Fact]
+        public async Task CanMutateACollectionFluentlyAndAsynchronously()
+        {
+            #pragma warning disable 1998
+            static async Task<int> TestFunc(int id) => id + 2;
+            #pragma warning restore 1998
+
+            var testCollection = new TestObject[]
+            {
+                new (1, "First"),
+                new (3, "Second"),
+                new (5, "Third")
+            };
+
+            await testCollection.ForEachAsync(async to => to.Id = await TestFunc(to.Id));
+
+            Assert.Equal(3, testCollection.Length);
+            Assert.Equal(3, testCollection.First(to => to.Name == "First").Id);
+            Assert.Equal(5, testCollection.First(to => to.Name == "Second").Id);
+            Assert.Equal(7, testCollection.First(to => to.Name == "Third").Id);
+        }
+
+        [Fact]
+        public void CannotMutateACollectionFluentlyUsingTheWrongMethod()
+        {
+            #pragma warning disable 1998
+            static async Task<int> TestFunc(int id) => id + 2;
+            #pragma warning restore 1998
+
+            var testCollection = new TestObject[]
+            {
+                new (1, "First"),
+                new (3, "Second"),
+                new (5, "Third")
+            };
+
+            Assert.Throws<InvalidOperationException>(() =>
+                #pragma warning disable CS0618 // Type or member is obsolete
+                testCollection.ForEach(async to => to.Id = await TestFunc(to.Id)));
+                #pragma warning restore CS0618 // Type or member is obsolete
         }
 
         #endregion

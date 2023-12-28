@@ -19,6 +19,7 @@ namespace Ministry.Compositions
     /// </remarks>
     [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
     [SuppressMessage("ReSharper", "UnusedMember.Global")]
+    [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "Shared Library")]
     public static class Projections
     {
         #region | Project |
