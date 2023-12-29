@@ -1,33 +1,67 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
-    <TargetFrameworks>netstandard1.6;net45</TargetFrameworks>
+    <TargetFrameworks>net6.0;net8.0;net48;netstandard1.6;netstandard2.0</TargetFrameworks>
+    <Nullable>disable</Nullable>
+    <ImplicitUsings>disable</ImplicitUsings>
+    <LangVersion>7.3</LangVersion>
+    <RootNamespace>Ministry</RootNamespace>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <AssemblyVersion>2.0.0.0</AssemblyVersion>
+    <FileVersion>2.0.0.0</FileVersion>
+    <Version>2.0.0</Version>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <AnalysisMode>Recommended</AnalysisMode>
+    <AnalysisModeGlobalization>None</AnalysisModeGlobalization>
+    <AnalysisModeSecurity>All</AnalysisModeSecurity>
+    <AnalysisModeMaintainability>All</AnalysisModeMaintainability>
+    <AnalysisLevel>6.0</AnalysisLevel>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
+    <GenerateDocumentationFile>true</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <PropertyGroup>
+    <Description>Library of Functional Composition Extension Methods</Description>
     <Authors>Keith Jackson</Authors>
     <Company>Minotech Ltd. (The Ministry of Technology)</Company>
-    <Description>Library of Functional Composition Extension Methods</Description>
-    <GeneratePackageOnBuild>true</GeneratePackageOnBuild>
-    <Copyright>2018 Minotech Ltd.</Copyright>
+    <Copyright>2024 Keith Jackson / The Ministry of Technology</Copyright>
     <RepositoryUrl>https://github.com/ministryotech/compositions.git</RepositoryUrl>
     <RepositoryType>git</RepositoryType>
-    <AssemblyVersion>1.3.0.0</AssemblyVersion>
-    <FileVersion>1.3.0.0</FileVersion>
-    <Version>1.3.0</Version>
-    <PackageLicenseUrl></PackageLicenseUrl>
-    <PackageProjectUrl>http://www.ministryotech.co.uk/developers/open-source-projects/</PackageProjectUrl>
-    <Configurations>Debug;Release</Configurations>
+    <IncludeContentInPack>true</IncludeContentInPack>
+    <PackageReadMeFile>README.md</PackageReadMeFile>
     <PackageLicenseFile>LICENSE</PackageLicenseFile>
   </PropertyGroup>
-  
+
+  <PropertyGroup>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
+    <!--<WarningsNotAsErrors></WarningsNotAsErrors>--><!--Enable this to allow some warnings-->
+  </PropertyGroup>
+
   <ItemGroup>
+    <None Include="..\..\LICENSE" Pack="true" PackagePath="" />
+    <None Include="..\..\README.md" Pack="true" PackagePath="" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net48' or '$(TargetFramework)' == 'netstandard1.6'">
     <PackageReference Include="Ministry.FluentGuard" Version="1.0.2" />
     <PackageReference Include="Ministry.Reflection" Version="4.0.1" />
   </ItemGroup>
-  
-  <ItemGroup>
-    <None Include="..\..\LICENSE">
-      <Pack>True</Pack>
-      <PackagePath></PackagePath>
-    </None>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'netstandard2.0'">
+    <PackageReference Include="Ministry.FluentGuard" Version="2.0.1" />
+    <PackageReference Include="Ministry.Reflection" Version="4.0.1" />
+  </ItemGroup>
+
+  <ItemGroup Condition=" '$(TargetFramework)' == 'net6.0' or '$(TargetFramework)' == 'net8.0'">
+    <PackageReference Include="Ministry.FluentGuard" Version="2.0.1" />
+    <PackageReference Include="Ministry.Reflection" Version="5.0.0" />
   </ItemGroup>
 
 </Project>
