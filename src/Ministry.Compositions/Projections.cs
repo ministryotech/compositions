@@ -1,4 +1,4 @@
-﻿#if NETSTANDARD1_6
+﻿#if !NETFRAMEWORK
 using Ministry.Reflection;
 #endif
 
@@ -17,14 +17,14 @@ namespace Ministry.Compositions
     /// All of the functions within this class are 'Pure' in a functional sense, returning new objects and do not mutate the input parameters.
     /// This contrasts with the <seealso cref="Compositions"/> class where mutability is a given.
     /// </remarks>
-    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
-    [SuppressMessage("ReSharper", "UnusedMember.Global")]
-    [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "Shared Library")]
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "Library")]
+    [SuppressMessage("ReSharper", "UnusedMember.Global", Justification = "Library")]
+    [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "Library")]
     public static class Projections
     {
         #region | Project |
 
-#if NETSTANDARD
+        #if !NETFRAMEWORK
 
         /// <summary>
         /// Projects all property values from the input object on the passed in target object, if they are present in both.
@@ -73,7 +73,7 @@ namespace Ministry.Compositions
             return targetObject;
         }
 
-#endif
+        #endif
 
         /// <summary>
         /// Uses the provided function to project one type into another type.

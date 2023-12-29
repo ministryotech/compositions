@@ -1,4 +1,4 @@
-﻿#if NETSTANDARD1_6
+﻿#if !NETFRAMEWORK
 using Ministry.Reflection;
 #endif
 
@@ -19,8 +19,9 @@ namespace Ministry.Compositions
     /// <remarks>
     /// In contrast with the <seealso cref="Projections"/> class, the functions are not guaranteed pure or immutable and will often mutate the state of the first parameter.
     /// </remarks>
-    [SuppressMessage("ReSharper", "UnusedMember.Global")]
-    [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "Shared Library")]
+    [SuppressMessage("ReSharper", "UnusedMember.Global", Justification = "Library")]
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "Library")]
+    [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "Library")]
     public static class Compositions
     {
         #region | Collection Manipulation |
@@ -114,7 +115,7 @@ namespace Ministry.Compositions
             return @this;
         }
 
-        #if NETSTANDARD1_6
+        #if !NETFRAMEWORK
 
         /// <summary>
         /// Adds the given new collection, evaluating each item against a given predicate, to the specified collection property and returns the parent object.
@@ -262,7 +263,7 @@ namespace Ministry.Compositions
         public static T Compose<T>(this T @this, Func<T, T> method)
             => method(@this);
 
-        #if NETSTANDARD
+        #if !NETFRAMEWORK
 
         /// <summary>
         /// Enables functional composition of a method, enabling chaining.
@@ -312,8 +313,6 @@ namespace Ministry.Compositions
         public static T Compose<T, TParam1>(this T @this, Func<T, TParam1, T> method, TParam1 param1)
             => method(@this, param1);
 
-        #if NETSTANDARD
-
         /// <summary>
         /// Enables functional composition of a method, enabling chaining.
         /// </summary>
@@ -353,8 +352,6 @@ namespace Ministry.Compositions
         public static async Task<T> Compose<T, TParam1>(this Task<T> @this, Func<T, TParam1, T> method, TParam1 param1)
             => method(await @this, param1);
 
-        #endif
-
         /// <summary>
         /// Enables functional composition of a method, enabling chaining.
         /// </summary>
@@ -370,7 +367,7 @@ namespace Ministry.Compositions
         public static T Compose<T, TParam1, TParam2>(this T @this, Func<T, TParam1, TParam2, T> method, TParam1 param1, TParam2 param2)
             => method(@this, param1, param2);
 
-        #if NETSTANDARD
+        #if !NETFRAMEWORK
 
         /// <summary>
         /// Enables functional composition of a method, enabling chaining.
@@ -423,7 +420,7 @@ namespace Ministry.Compositions
 
         #region | SetAndReturnProperty |
 
-        #if NETSTANDARD
+        #if !NETFRAMEWORK
 
         /// <summary>
         /// Sets the specified navigation property value on an object to enable chaining and to ensure that the object tree is built in the right order.
@@ -438,7 +435,7 @@ namespace Ministry.Compositions
             T newValue)
         {
             var propertyInfo = @this.GetType().GetTypeInfo().GetProperty(property);
-            propertyInfo.SetMethod.Invoke(@this, new object[] { newValue });
+            if (propertyInfo != null) propertyInfo.SetMethod.Invoke(@this, new object[] { newValue });
             return newValue;
         }
 
@@ -474,7 +471,7 @@ namespace Ministry.Compositions
 
         #region | SetProperty |
 
-        #if NETSTANDARD
+        #if !NETFRAMEWORK
 
         /// <summary>
         /// Sets the specified navigation property value on an object to enable chaining and to ensure that the object tree is built in the right order.
@@ -489,7 +486,7 @@ namespace Ministry.Compositions
             T newValue)
         {
             var propertyInfo = @this.GetType().GetTypeInfo().GetProperty(property);
-            propertyInfo.SetMethod.Invoke(@this, new object[] { newValue });
+            if (propertyInfo != null) propertyInfo.SetMethod.Invoke(@this, new object[] { newValue });
             return @this;
         }
 

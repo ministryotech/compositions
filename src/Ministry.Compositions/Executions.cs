@@ -15,9 +15,10 @@ namespace Ministry.Compositions
     /// The Execution extensions here allow you to write these same queries in a more explicit way, using Execute() instead of Select()
     /// the result is automatically executed and converted into an explicit type.
     /// </remarks>
-    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
-    [SuppressMessage("ReSharper", "UnusedMember.Global")]
-    [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "Shared Library")]
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global", Justification = "Library")]
+    [SuppressMessage("ReSharper", "UnusedMember.Global", Justification = "Library")]
+    [SuppressMessage("ReSharper", "UnusedType.Global", Justification = "Library")]
+    [SuppressMessage("CodeQuality", "IDE0079:Remove unnecessary suppression", Justification = "Library")]
     public static class Executions
     {
         /// <summary>

@@ -4,11 +4,13 @@ using System.Linq;
 using System.Threading.Tasks;
 using Ministry.Compositions.Tests.TestSupport;
 using NSubstitute;
+using System.Diagnostics.CodeAnalysis;
 using Xunit;
 
 namespace Ministry.Compositions.Tests
 {
-    public class CompositionsTests
+    [SuppressMessage("ReSharper", "MemberCanBePrivate.Global")]
+    public sealed class CompositionsTests
     {
         #region | Collections |
 
@@ -116,7 +118,7 @@ namespace Ministry.Compositions.Tests
             var subEntity = Substitute.For<IEntity<long>>();
             subEntity.ID.Returns(23);
 
-            var result = subEntity.Compose(IncrementID).Compose(IncrementID).Compose(IncrementID);
+            var result = subEntity.Compose(IncrementId).Compose(IncrementId).Compose(IncrementId);
 
             Assert.Equal(subEntity, result);
             Assert.Equal(26, result.ID);
@@ -125,57 +127,57 @@ namespace Ministry.Compositions.Tests
         [Theory]
         [InlineData(1, 24)]
         [InlineData(3, 26)]
-        public void CanComposeAFunctionThatTakesAnEntityAndAParameterAndReturnsThatEntity(int incrementValue, int expectedID)
+        public void CanComposeAFunctionThatTakesAnEntityAndAParameterAndReturnsThatEntity(int incrementValue, int expectedId)
         {
             var subEntity = Substitute.For<IEntity<long>>();
             subEntity.ID.Returns(23);
 
-            var result = subEntity.Compose(IncrementID, incrementValue);
+            var result = subEntity.Compose(IncrementId, incrementValue);
 
             Assert.Equal(subEntity, result);
-            Assert.Equal(expectedID, result.ID);
+            Assert.Equal(expectedId, result.ID);
         }
 
         [Theory]
         [InlineData(1, 26)]
         [InlineData(3, 30)]
-        public void CanComposeAFunctionThatTakesAnEntityAndAParameterAndReturnsThatEntityEnablingChaining(int incrementValue, int expectedID)
+        public void CanComposeAFunctionThatTakesAnEntityAndAParameterAndReturnsThatEntityEnablingChaining(int incrementValue, int expectedId)
         {
             var subEntity = Substitute.For<IEntity<long>>();
             subEntity.ID.Returns(23);
 
-            var result = subEntity.Compose(IncrementID).Compose(IncrementID, incrementValue).Compose(IncrementID, incrementValue);
+            var result = subEntity.Compose(IncrementId).Compose(IncrementId, incrementValue).Compose(IncrementId, incrementValue);
 
             Assert.Equal(subEntity, result);
-            Assert.Equal(expectedID, result.ID);
+            Assert.Equal(expectedId, result.ID);
         }
 
         [Theory]
         [InlineData(1, 48)]
         [InlineData(3, 52)]
-        public void CanComposeAFunctionThatTakesAnEntityAnd2ParametersAndReturnsThatEntity(int incrementValue, int expectedID)
+        public void CanComposeAFunctionThatTakesAnEntityAnd2ParametersAndReturnsThatEntity(int incrementValue, int expectedId)
         {
             var subEntity = Substitute.For<IEntity<long>>();
             subEntity.ID.Returns(23);
 
-            var result = subEntity.Compose(IncrementID, incrementValue, true);
+            var result = subEntity.Compose(IncrementId, incrementValue, true);
 
             Assert.Equal(subEntity, result);
-            Assert.Equal(expectedID, result.ID);
+            Assert.Equal(expectedId, result.ID);
         }
 
         [Theory]
         [InlineData(1, 52)]
         [InlineData(3, 60)]
-        public void CanComposeAFunctionThatTakesAnEntityAnd2ParametersAndReturnsThatEntityEnablingChaining(int incrementValue, int expectedID)
+        public void CanComposeAFunctionThatTakesAnEntityAnd2ParametersAndReturnsThatEntityEnablingChaining(int incrementValue, int expectedId)
         {
             var subEntity = Substitute.For<IEntity<long>>();
             subEntity.ID.Returns(23);
 
-            var result = subEntity.Compose(IncrementID).Compose(IncrementID, incrementValue, false).Compose(IncrementID, incrementValue, true);
+            var result = subEntity.Compose(IncrementId).Compose(IncrementId, incrementValue, false).Compose(IncrementId, incrementValue, true);
 
             Assert.Equal(subEntity, result);
-            Assert.Equal(expectedID, result.ID);
+            Assert.Equal(expectedId, result.ID);
         }
 
         [Fact]
@@ -185,10 +187,10 @@ namespace Ministry.Compositions.Tests
             subEntity.ID.Returns(23);
             var subIncrementor = Substitute.For<ISubbingClass>();
 
-            subEntity.Compose(subIncrementor.IncrementID, 4);
+            subEntity.Compose(subIncrementor.IncrementId, 4);
 
-            subIncrementor.Received().IncrementID(Arg.Any<IEntity<long>>(), Arg.Any<int>());
-            subIncrementor.Received().IncrementID(subEntity, 4);
+            subIncrementor.Received().IncrementId(Arg.Any<IEntity<long>>(), Arg.Any<int>());
+            subIncrementor.Received().IncrementId(subEntity, 4);
         }
 
         [Fact]
@@ -198,15 +200,15 @@ namespace Ministry.Compositions.Tests
             subEntity.ID.Returns(23);
             var subIncrementor = Substitute.For<ISubbingClass>();
 
-            subIncrementor.IncrementID(Arg.Any<IEntity<long>>(), 4).Returns(subEntity);
-            subIncrementor.IncrementID(Arg.Any<IEntity<long>>(), 1).Returns(subEntity);
+            subIncrementor.IncrementId(Arg.Any<IEntity<long>>(), 4).Returns(subEntity);
+            subIncrementor.IncrementId(Arg.Any<IEntity<long>>(), 1).Returns(subEntity);
 
-            subEntity.Compose(subIncrementor.IncrementID, 4)
-                .Compose(subIncrementor.IncrementID, 1);
+            subEntity.Compose(subIncrementor.IncrementId, 4)
+                .Compose(subIncrementor.IncrementId, 1);
 
-            subIncrementor.Received(2).IncrementID(Arg.Any<IEntity<long>>(), Arg.Any<int>());
-            subIncrementor.Received(1).IncrementID(subEntity, 4);
-            subIncrementor.Received(1).IncrementID(subEntity, 1);
+            subIncrementor.Received(2).IncrementId(Arg.Any<IEntity<long>>(), Arg.Any<int>());
+            subIncrementor.Received(1).IncrementId(subEntity, 4);
+            subIncrementor.Received(1).IncrementId(subEntity, 1);
         }
 
         [Fact]
@@ -215,7 +217,7 @@ namespace Ministry.Compositions.Tests
             var subEntity = Substitute.For<IEntity<long>>();
             subEntity.ID.Returns(23);
 
-            var result = await subEntity.ComposeAsync(IncrementIDAsync);
+            var result = await subEntity.ComposeAsync(IncrementIdAsync);
 
             Assert.Equal(subEntity, result);
             Assert.Equal(24, result.ID);
@@ -227,7 +229,7 @@ namespace Ministry.Compositions.Tests
             var subEntity = Substitute.For<IEntity<long>>();
             subEntity.ID.Returns(23);
 
-            var result = await subEntity.Compose(IncrementID).ComposeAsync(IncrementIDAsync).ComposeAsync(IncrementIDAsync);
+            var result = await subEntity.Compose(IncrementId).ComposeAsync(IncrementIdAsync).ComposeAsync(IncrementIdAsync);
 
             Assert.Equal(subEntity, result);
             Assert.Equal(26, result.ID);
@@ -236,57 +238,57 @@ namespace Ministry.Compositions.Tests
         [Theory]
         [InlineData(1, 24)]
         [InlineData(3, 26)]
-        public async void CanComposeAnAsyncFunctionThatTakesAnEntityAndAParameterAndReturnsThatEntity(int incrementValue, int expectedID)
+        public async void CanComposeAnAsyncFunctionThatTakesAnEntityAndAParameterAndReturnsThatEntity(int incrementValue, int expectedId)
         {
             var subEntity = Substitute.For<IEntity<long>>();
             subEntity.ID.Returns(23);
 
-            var result = await subEntity.ComposeAsync(IncrementIDAsync, incrementValue);
+            var result = await subEntity.ComposeAsync(IncrementIdAsync, incrementValue);
 
             Assert.Equal(subEntity, result);
-            Assert.Equal(expectedID, result.ID);
+            Assert.Equal(expectedId, result.ID);
         }
 
         [Theory]
         [InlineData(1, 26)]
         [InlineData(3, 30)]
-        public async void CanComposeAnAsyncFunctionThatTakesAnEntityAndAParameterAndReturnsThatEntityEnablingChaining(int incrementValue, int expectedID)
+        public async void CanComposeAnAsyncFunctionThatTakesAnEntityAndAParameterAndReturnsThatEntityEnablingChaining(int incrementValue, int expectedId)
         {
             var subEntity = Substitute.For<IEntity<long>>();
             subEntity.ID.Returns(23);
 
-            var result = await subEntity.Compose(IncrementID).ComposeAsync(IncrementIDAsync, incrementValue).ComposeAsync(IncrementIDAsync, incrementValue);
+            var result = await subEntity.Compose(IncrementId).ComposeAsync(IncrementIdAsync, incrementValue).ComposeAsync(IncrementIdAsync, incrementValue);
 
             Assert.Equal(subEntity, result);
-            Assert.Equal(expectedID, result.ID);
+            Assert.Equal(expectedId, result.ID);
         }
 
         [Theory]
         [InlineData(1, 48)]
         [InlineData(3, 52)]
-        public async void CanComposeAnAsyncFunctionThatTakesAnEntityAnd2ParametersAndReturnsThatEntity(int incrementValue, int expectedID)
+        public async void CanComposeAnAsyncFunctionThatTakesAnEntityAnd2ParametersAndReturnsThatEntity(int incrementValue, int expectedId)
         {
             var subEntity = Substitute.For<IEntity<long>>();
             subEntity.ID.Returns(23);
 
-            var result = await subEntity.ComposeAsync(IncrementIDAsync, incrementValue, true);
+            var result = await subEntity.ComposeAsync(IncrementIdAsync, incrementValue, true);
 
             Assert.Equal(subEntity, result);
-            Assert.Equal(expectedID, result.ID);
+            Assert.Equal(expectedId, result.ID);
         }
 
         [Theory]
         [InlineData(1, 52)]
         [InlineData(3, 60)]
-        public async void CanComposeAnAsyncFunctionThatTakesAnEntityAnd2ParametersAndReturnsThatEntityEnablingChaining(int incrementValue, int expectedID)
+        public async void CanComposeAnAsyncFunctionThatTakesAnEntityAnd2ParametersAndReturnsThatEntityEnablingChaining(int incrementValue, int expectedId)
         {
             var subEntity = Substitute.For<IEntity<long>>();
             subEntity.ID.Returns(23);
 
-            var result = await subEntity.Compose(IncrementID).ComposeAsync(IncrementIDAsync, incrementValue, false).ComposeAsync(IncrementIDAsync, incrementValue, true);
+            var result = await subEntity.Compose(IncrementId).ComposeAsync(IncrementIdAsync, incrementValue, false).ComposeAsync(IncrementIdAsync, incrementValue, true);
 
             Assert.Equal(subEntity, result);
-            Assert.Equal(expectedID, result.ID);
+            Assert.Equal(expectedId, result.ID);
         }
 
         [Fact]
@@ -296,10 +298,10 @@ namespace Ministry.Compositions.Tests
             subEntity.ID.Returns(23);
             var subIncrementor = Substitute.For<ISubbingClass>();
 
-            await subEntity.ComposeAsync(subIncrementor.IncrementIDAsync, 4);
+            await subEntity.ComposeAsync(subIncrementor.IncrementIdAsync, 4);
 
-            await subIncrementor.Received().IncrementIDAsync(Arg.Any<IEntity<long>>(), Arg.Any<int>());
-            await subIncrementor.Received().IncrementIDAsync(subEntity, 4);
+            await subIncrementor.Received().IncrementIdAsync(Arg.Any<IEntity<long>>(), Arg.Any<int>());
+            await subIncrementor.Received().IncrementIdAsync(subEntity, 4);
         }
 
         [Fact]
@@ -309,67 +311,68 @@ namespace Ministry.Compositions.Tests
             subEntity.ID.Returns(23);
             var subIncrementor = Substitute.For<ISubbingClass>();
 
-            subIncrementor.IncrementIDAsync(Arg.Any<IEntity<long>>(), 4).Returns(subEntity);
-            subIncrementor.IncrementIDAsync(Arg.Any<IEntity<long>>(), 1).Returns(subEntity);
+            subIncrementor.IncrementIdAsync(Arg.Any<IEntity<long>>(), 4).Returns(subEntity);
+            subIncrementor.IncrementIdAsync(Arg.Any<IEntity<long>>(), 1).Returns(subEntity);
 
-            await subEntity.ComposeAsync(subIncrementor.IncrementIDAsync, 4)
-                .ComposeAsync(subIncrementor.IncrementIDAsync, 1);
+            await subEntity.ComposeAsync(subIncrementor.IncrementIdAsync, 4)
+                .ComposeAsync(subIncrementor.IncrementIdAsync, 1);
 
-            await subIncrementor.Received(2).IncrementIDAsync(Arg.Any<IEntity<long>>(), Arg.Any<int>());
-            await subIncrementor.Received(1).IncrementIDAsync(subEntity, 4);
-            await subIncrementor.Received(1).IncrementIDAsync(subEntity, 1);
+            await subIncrementor.Received(2).IncrementIdAsync(Arg.Any<IEntity<long>>(), Arg.Any<int>());
+            await subIncrementor.Received(1).IncrementIdAsync(subEntity, 4);
+            await subIncrementor.Received(1).IncrementIdAsync(subEntity, 1);
         }
 
         #endregion
 
         #region | Supporting Methods (and other stuff) |
 
-        private IEntity<long> IncrementID(IEntity<long> entity)
-            => IncrementID(entity, 1);
+        private IEntity<long> IncrementId(IEntity<long> entity)
+            => IncrementId(entity, 1);
 
-        private IEntity<long> IncrementID(IEntity<long> entity, int incrementBy)
-            => IncrementID(entity, incrementBy, false);
+        private IEntity<long> IncrementId(IEntity<long> entity, int incrementBy)
+            => IncrementId(entity, incrementBy, false);
 
-        private IEntity<long> IncrementID(IEntity<long> entity, int incrementBy, bool doubleValue)
+        private IEntity<long> IncrementId(IEntity<long> entity, int incrementBy, bool doubleValue)
         {
-            entity.ID = entity.ID + incrementBy;
-            if (doubleValue) entity.ID = entity.ID * 2;
+            entity.ID += incrementBy;
+            if (doubleValue) entity.ID *= 2;
             return entity;
         }
 
-        private async Task<IEntity<long>> IncrementIDAsync(IEntity<long> entity)
-            => await IncrementIDAsync(entity, 1);
+        private async Task<IEntity<long>> IncrementIdAsync(IEntity<long> entity)
+            => await IncrementIdAsync(entity, 1);
 
-        private async Task<IEntity<long>> IncrementIDAsync(IEntity<long> entity, int incrementBy)
-            => await IncrementIDAsync(entity, incrementBy, false);
+        private async Task<IEntity<long>> IncrementIdAsync(IEntity<long> entity, int incrementBy)
+            => await IncrementIdAsync(entity, incrementBy, false);
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-        private async Task<IEntity<long>> IncrementIDAsync(IEntity<long> entity, int incrementBy, bool doubleValue)
+        private async Task<IEntity<long>> IncrementIdAsync(IEntity<long> entity, int incrementBy, bool doubleValue)
         {
-            entity.ID = entity.ID + incrementBy;
-            if (doubleValue) entity.ID = entity.ID * 2;
+            entity.ID += incrementBy;
+            if (doubleValue) entity.ID *= 2;
             return entity;
         }
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
 
         public interface ISubbingClass
         {
-            IEntity<long> IncrementID(IEntity<long> entity, int incrementBy);
-            Task<IEntity<long>> IncrementIDAsync(IEntity<long> entity, int incrementBy);
+            IEntity<long> IncrementId(IEntity<long> entity, int incrementBy);
+            Task<IEntity<long>> IncrementIdAsync(IEntity<long> entity, int incrementBy);
         }
 
+        [SuppressMessage("ReSharper", "UnusedType.Global", Justification = "Testing")]
         public class SubbingClass : ISubbingClass
         {
-            public IEntity<long> IncrementID(IEntity<long> entity, int incrementBy)
+            public IEntity<long> IncrementId(IEntity<long> entity, int incrementBy)
             {
-                entity.ID = entity.ID + incrementBy;
+                entity.ID += incrementBy;
                 return entity;
             }
 
 #pragma warning disable CS1998 // Async method lacks 'await' operators and will run synchronously
-            public async Task<IEntity<long>> IncrementIDAsync(IEntity<long> entity, int incrementBy)
+            public async Task<IEntity<long>> IncrementIdAsync(IEntity<long> entity, int incrementBy)
             {
-                entity.ID = entity.ID + incrementBy;
+                entity.ID += incrementBy;
                 return entity;
             }
 #pragma warning restore CS1998 // Async method lacks 'await' operators and will run synchronously
